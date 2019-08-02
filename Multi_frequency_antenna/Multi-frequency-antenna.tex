@@ -77,19 +77,14 @@
 
 \begin{frame}[t]{Problem formulation}
 
-\textbf{Given:} 
-\begin{itemize}
-	\item antenna configuration ($d, N$)
-	\item reference pattern
-	\item set of wavelengths (frequencies)
-\end{itemize}
+\textbf{Given:} antenna configuration ($d, N$), reference patterns at different frequencies.
 
-\textbf{Find:} optimal allocation of currents among antenna elements so that their radiation patterns match desired ones. 
+\textbf{Find:} optimal allocation of currents among antenna elements
     
 \begin{equation*}
 \begin{aligned}
 & \minimise_{I^{\lambda_{1\ldots k}}} 
-& & \Big\| |\mathcal{F}_{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - |b|^2 \Big\|_2^2 \\
+& & \Big\| \mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}} - b^{\lambda_{1 \ldots k}} \Big\|_2^2 \\
 & \st
 & & I^{\lambda_i} \odot I^{\lambda_j} = 0, \quad \forall i, j \colon i \ne j \\
 \end{aligned}
@@ -100,7 +95,10 @@ where
   \mathcal{F}_{\lambda_{1 \ldots k}} = \diag{(\mathcal{F}_{\lambda_1}, \mathcal{F}_{\lambda_2}, \ldots, \mathcal{F}_{\lambda_k})}, \quad \mathcal{F}_{\lambda_{k}} = \Big\{ e^{i \frac{2\pi}{\lambda_k}n d \cos{\phi_m}} \Big\}_{n=0\ldots N, m = 0\ldots M}
 \end{equation*}
 
-\textbf{Note}. The problem is non-convex, non-linear with a combinatorial constraint.
+\textbf{Note}: 
+\begin{itemize}
+    \item The problem is non-convex, non-linear with a combinatorial constraint, i.e. $(k+1)^N$ solutions should be tested ($k$ - number of frequencies, $N$ - number of elements).
+\end{itemize}
 
 \end{frame}
 
@@ -109,15 +107,76 @@ where
 % -----------------------------------------------------------------------------------------------------------------
 %
 
+
+
+\begin{frame}[t]{Results}
+
+For $2$ different currents:
+
+\begin{equation*}
+\begin{aligned}
+& \minimise_{I^{\lambda_{1\ldots k}}} 
+& & \Big\| \mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}} - b^{\lambda_{1 \ldots k}} \Big\|_2^2 \\
+& \st
+& & (I^{\lambda_{1\ldots k}})^T B I^{\lambda_{1\ldots k}} = 0 \\
+&&& I^{\lambda_{1\ldots k}} \succeq 0 \\
+\end{aligned}
+\end{equation*}
+where $B$ is backward identity matrix, i.e. $\begin{bmatrix} 0 & I \\ I & 0\end{bmatrix}$
+
+
+Non-trivial lower bound can be obtained:
+
+\begin{equation*}
+\begin{aligned}
+& \min_{x} 
+& & \Big\{\| Ax - b \|_2^2 + \lambda_{min} (A^TA) x^T B x \Big\} \\
+& \st
+& & x \ge 0 \\
+\end{aligned}
+\end{equation*}
+
+\end{frame}
+
+
+
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+\begin{frame}[t]{Power pattern. Uncertainty principle}
+
+\begin{equation*}
+\Big\| |\mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - |b^{\lambda_{1 \ldots k}}|^2 \Big\|_2^2 = \sum_{k=1}^K \sum_{m=1}^M \Big\| (I^{\lambda_{k}})^T Q^{\lambda_{k}}_m  I^{\lambda_{k}} - |b^{\lambda_{k}}_m|^2 \Big\|_2^2
+\end{equation*}
+
+
+ 
+\begin{itemize}
+	\item It can be shown that the gradient of the objective function is non-zero everywhere except solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
+	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
+	\begin{equation*}
+  \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
+  \label{antenna_design_condition}
+	\end{equation*}
+	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design, i.e. \textit{the finer the spacial resolution of the beam is the more values of $\frac{d}{\lambda}$ should be avoided in favour of optimality, i.e. $\mathcal{N}_{+}(Q_i) = \varnothing$.}
+\end{itemize}
+
+\end{frame}
+
+
+
 \begin{frame}[t]{Proposed solution}
 
 \begin{itemize}
 \item Introduce $J^{\lambda_k}_n = \log{I^{\lambda_k}_n}$ (this implies $I^{\lambda_k}_n > 0$)
 \item Combinatorial constraints are converted into simple linear constraints:
-	\begin{equation*}
+    \begin{equation*}
   J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j
-	\end{equation*}
-	where $\epsilon$ is a design parameter. 
+    \end{equation*}
+    where $\epsilon$ is a design parameter. 
 \end{itemize}
 
 Optimisation problem:
@@ -130,22 +189,6 @@ Optimisation problem:
 \end{aligned}
 \end{equation*}
 where $Q_{\lambda_{1 \ldots k}} = \diag{\big[Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}\big]}$ is a rank 4 tensor with $Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}$ are rank 3 tensors consisting of matrices $Q_{\lambda_{k}, i} = \Real{(\overline{f_{\lambda_{k}, i}} \otimes f_{\lambda_{k}, i} )}$. 
-
-\end{frame}
-
-
-
-\begin{frame}[t]{Proposed solution}
- 
-\begin{itemize}
-	\item It can be shown that the gradient of the objective function is non-zero everywhere except solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
-	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
-	\begin{equation*}
-  \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
-  \label{antenna_design_condition}
-	\end{equation*}
-	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design, i.e. \textit{the finer the spacial resolution of the beam is the more values of $\frac{d}{\lambda}$ should be avoided in favour of optimality, i.e. $\mathcal{N}_{+}(Q_i) = \varnothing$.}
-\end{itemize}
 
 \end{frame}
 
