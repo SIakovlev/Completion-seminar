@@ -1,0 +1,95 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+%\documentclass[tikz]{standalone}
+
+%\begin{document}
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.568in,
+height=3.603in,
+at={(0.766in,0.486in)},
+scale only axis,
+xmin=0,
+xmax=1500,
+xlabel={Measurement number},
+xmajorgrids,
+ymode=log,
+ymin=1,
+ymax=1000,
+yminorticks=true,
+ylabel={Relative error ($\frac{\|\mathbf{z} - \hat{\mathbf{z}}\|_2}{\|\mathbf{z}\|_2}$, \%)},
+ymajorgrids,
+yminorgrids,
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+legend style={legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=red,dashed,line width=1.3pt,mark=triangle,mark options={solid}]
+  table[row sep=crcr]{%
+100	315.505572794848\\
+200	413.442455243232\\
+300	291.025933088993\\
+400	170.853724578789\\
+500	135.166754090598\\
+600	40.4777634871918\\
+700	35.237700273764\\
+800	32.4226042376936\\
+900	34.8246811866205\\
+1000	34.5256192284356\\
+1100	34.4251840531208\\
+1200	30.4417949624167\\
+1300	29.9657197429916\\
+1400	25.6721816132976\\
+1500	26.6347454821924\\
+};
+\addlegendentry{BCI - 1\% full scale error};
+
+\addplot [color=blue,dashed,line width=1.3pt,mark=triangle,mark options={solid}]
+  table[row sep=crcr]{%
+100	187.537516241893\\
+200	345.019774925398\\
+300	157.070346911434\\
+400	52.2225050813796\\
+500	195.592859882091\\
+600	45.4629924352772\\
+700	29.7303405125778\\
+800	29.4007813616927\\
+900	31.9041357982395\\
+1000	28.6277407815784\\
+1100	28.8097504797138\\
+1200	28.3998681621572\\
+1300	27.2909792471694\\
+1400	22.0800943539281\\
+1500	22.2910467913664\\
+};
+\addlegendentry{BCI - 0.5\% full scale error};
+
+\addplot [color=black,dashed,line width=1.3pt,mark=triangle,mark options={solid}]
+  table[row sep=crcr]{%
+100	49.0003822448614\\
+200	26.4470755099597\\
+300	29.1541961375161\\
+400	23.7438857728425\\
+500	24.1142183615273\\
+600	19.831499582388\\
+700	19.4279519372667\\
+800	19.2529692900884\\
+900	19.2526335921566\\
+1000	19.3236477125504\\
+1100	19.1650113623052\\
+1200	19.1737705411378\\
+1300	19.1322538593005\\
+1400	19.1746548811728\\
+1500	19.1700657306445\\
+};
+\addlegendentry{BCI - 0.1\% full scale error};
+
+\end{axis}
+\end{tikzpicture}%
+%\end{document}

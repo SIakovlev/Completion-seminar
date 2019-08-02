@@ -1,0 +1,219 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+
+\usepackage{subfiles}
+\usepackage{float}				% To set figures position (look: http://tex.stackexchange.com/questions/8625/force-figure-placement-in-text)
+\usepackage{amsmath, amssymb, amsthm, mathtools}  			% Math package
+\usepackage{tikz}				% Drawing library	
+\usepackage{pgfplots}
+\usepackage{subfloat}			% Drawings floating package
+\usepackage{algorithm}			% To write algorithms in pseudo code
+\usepackage{xcolor}
+\usepackage{standalone} 			%to include standalone tikz pictures
+\usepackage[noend]{algpseudocode} %No end to remove endif, endfor etc.
+\usepackage{framed}
+\usepackage{verbatim}			% to add comments
+\usepackage{savesym}
+\savesymbol{Cross} 
+  \usepackage{bbding}  % to add a checkmark
+\restoresymbol{bb}{Cross}
+
+\usepackage{bm}
+%\usepackage{subcaption}
+\usepackage{tcolorbox}
+\usepackage{pifont}
+
+% For graphs generated with matlab2tikz
+\usepackage[utf8]{inputenc}
+\usepackage{grffile}
+\usepackage{marvosym}     % for lightning symbol
+
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{patchplots}
+
+
+\usefonttheme{structurebold}
+\usefonttheme[onlymath]{serif}
+\setbeamercovered{invisible}
+\setbeamercolor{caption name}{fg=black}
+\setbeamercolor{normal text}{bg=white,fg=black}
+\setbeamercolor{frametitle}{fg=black,bg=gray!20}
+\setbeamercolor{title}{bg=white,fg=black}
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{black}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{gray!50}$\blacktriangleright$}
+\setbeamertemplate{itemize subsubitem}{\color{gray!20}$\blacktriangleright$}
+\setbeamertemplate{footline}[frame number]
+
+\usetikzlibrary{arrows, arrows.meta}  % Arrows library
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{groupplots}
+
+\definecolor{shadecolor}{RGB}{180,180,180}
+
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\minimise}{minimise}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\st}{s.t.}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\Real}{Re}
+\DeclareMathOperator{\Imag}{Im}
+
+\newcommand{\cmark}{\ding{51}} % checkmark
+\newcommand{\xmark}{\ding{53}} % xmark
+
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * matha
+      <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+      }{}
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareMathSymbol{\varleftarrow}{3}{matha}{"D0}
+\DeclareMathSymbol{\varrightarrow}{3}{matha}{"D1}
+\DeclareMathSymbol{\varuparrow}{3}{matha}{"D2}
+\DeclareMathSymbol{\vardownarrow}{3}{matha}{"D3}
+
+\theoremstyle{plain}
+%\newtheorem{lemma}{Lemma}
+
+\setbeamercolor{postit}{fg=black,bg=yellow!5}
+
+
+\title{Non-convex optimisation problems in antenna design and power network modelling}
+\author{
+Sergey Iakovlev\textsuperscript{ 1}, \\ 
+Prof. Iven Mareels\textsuperscript{ 2}, \\
+Prof. Rob Evans\textsuperscript{ 1}
+}
+\institute{
+\textsuperscript{1 }Electrical and Electronic Engineering Department, The University of Melbourne, Australia, \\
+\textsuperscript{2 }IBM Research, Australia.
+}
+\date[\today]{}
+
+\def\HiLi{\leavevmode\rlap{\hbox to \hsize{\color{yellow!50}\leaders\hrule height .8\baselineskip depth .5ex\hfill}}} % To highlight the line
+
+\resetcounteronoverlays{algorithm}
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+
+\begin{document}
+
+\begin{frame}[t]
+\titlepage
+\end{frame}
+
+\begin{frame}[t]{Outline}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+
+\hfill
+
+  \only<1>{
+    \tableofcontents[sections={1}]
+    
+    \hfill
+    
+    \tableofcontents[sections={2-6},sectionstyle=shaded,subsectionstyle=shaded]
+  }
+  \only<2>{
+    \tableofcontents[sections={1},sectionstyle=shaded,subsectionstyle=shaded]
+    
+    \hfill
+    
+    \tableofcontents[sections={2}]
+    
+    \hfill
+    
+    \tableofcontents[sections={3-6},sectionstyle=shaded,subsectionstyle=shaded]
+  }
+  \only<3>{
+    \tableofcontents[sections={1,2},sectionstyle=shaded,subsectionstyle=shaded]
+    
+    \hfill
+    
+    \tableofcontents[sections={3}]
+    
+    \hfill
+    
+    \tableofcontents[sections={4-6},sectionstyle=shaded,subsectionstyle=shaded]
+  }
+  \only<4>{
+    \tableofcontents[sections={1-3},sectionstyle=shaded,subsectionstyle=shaded]
+    
+    \hfill
+    
+    \tableofcontents[sections={4}]
+    
+    \hfill
+    
+    \tableofcontents[sections={5-6},sectionstyle=shaded,subsectionstyle=shaded]
+  }
+\end{column}
+\begin{column}{0.5\textwidth}
+
+\only<1>{
+\begin{itemize}
+\item Main issues in LV grids
+\item Motivation. Examples
+\item Problem formulation. Assumptions. Phase and time synchronicity
+\end{itemize}
+}
+
+\only<2>{
+\begin{itemize}
+\item Fixed-point iteration algorithm. Interpretation
+\item Concept of decentralised calculations
+\item Results
+\end{itemize}
+}
+
+\only<3>{
+\begin{itemize}
+\item --------------------------
+\item --------------------------
+\end{itemize}
+}
+
+\only<4>{
+\begin{itemize}
+\item --------------------------
+\item --------------------------
+\end{itemize}
+}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\section{LV grid modelling}
+
+\subfile{LV_modelling/LV_modelling}
+
+\section{LV grid impedance identification}
+
+\subfile{LV_identification/LV_identification}
+
+\section{Multi-frequency antenna beam-forming}
+
+\subfile{Multi_frequency_antenna/Multi-frequency-antenna}
+
+\section{Results and conclusions}
+
+\subfile{Conclusions/Conclusions}
+
+\section{Future work}
+
+\end{document}

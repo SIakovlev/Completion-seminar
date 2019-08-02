@@ -1,0 +1,174 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+
+\begin{frame}[t]{Multi-frequency antenna elements allocation. Motivation}
+
+\end{frame}
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+\begin{frame}[t]{Multi-frequency antenna elements allocation}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \draw[thin, color=gray!50] (0, 0) -- (0, 0.5);
+    \draw[thin, color=gray!50] (1, 0) -- (1, 0.5);
+    \draw[thin, latex'-latex'] (0, 0.5) -- node[above]{$d$} (1, 0.5);
+
+    \draw[thin, -latex', color=gray] (0, 0) -- (-1, 1);
+    \coordinate (a1) at (-1, 0);
+    \coordinate (b1) at (0, 0);
+    \coordinate (c1) at (-1, 1);
+    \pic["$\phi_{m}$", draw,<-,>=stealth,angle eccentricity=1.7, angle radius=0.5cm] {angle=c1--b1--a1};
+    \draw[thin] (a1) -- (b1);
+    \draw[fill] (0,0) circle [radius=0.1] node[below left]{\scriptsize $1$};
+    \draw[thin, -latex'] (0, -1) node[below]{$I^{\lambda_k}_1$} -- (0, -0.1);
+
+    \draw[fill] (1,0) circle [radius=0.1] node[below left]{\scriptsize $2$};
+    \draw[thin, -latex'] (1, -1) node[below]{$I^{\lambda_k}_2$} -- (1, -0.1);
+
+    \draw[thin, -latex', color=gray] (2, 0) -- (1, 1);
+    \draw[fill] (2,0) circle [radius=0.1] node[below left]{\scriptsize $3$};
+    \draw[thin, -latex'] (2, -1) node[below]{$I^{\lambda_k}_3$} -- (2, -0.1);
+
+    \draw[draw=black, dotted] (-0.4, -1) rectangle node[below=0.5cm]{$I^{\lambda_k}$} (2.4, -1.7);
+
+    \draw[thin, -latex', color=gray] (3, 0) -- (2, 1);
+    \draw[fill] (3,0) circle [radius=0.1] node[below left]{\scriptsize $4$};
+    \draw[thin, -latex'] (3, -1) node[below]{$I^{\lambda_{l}}_1$} -- (3, -0.1);
+
+    \draw[dotted, thin](3.5, 0) -- (4.5, 0);
+
+    \draw[thin, -latex', color=gray] (5, 0) -- (4, 1);
+    \draw[fill] (5,0) circle [radius=0.1] node[below left]{\scriptsize $N-1$};
+    \draw[thin, thin, -latex'] (5, -1) node[below]{$I^{\lambda_{l}}_n$} -- (5, -0.1);
+    
+    \draw[thin, -latex', color=gray] (6, 0) -- (5, 1);
+    \draw[fill] (6,0) circle [radius=0.1] node[below left]{\scriptsize $N$};
+    \draw[thin, thin, -latex'] (6, -1) node[below]{$I^{\lambda_{l}}_{n+1}$} -- (6, -0.1);
+
+    \draw[draw=black, dotted] (2.6, -1) rectangle node[below=0.5cm]{$I^{\lambda_l}$} (6.4, -1.7);
+
+  \end{tikzpicture}
+\end{figure}
+
+\begin{itemize}
+	\item $I^{\lambda_{l}}$ and $I^{\lambda_{k}}$ represent randomly allocated currents with wavelengths $\lambda_l$ and $\lambda_k$ for illustration purposes
+	\item $\phi_{m}$ is the beam angle, $d$ is the distance between antenna elements
+\end{itemize}
+
+\end{frame}
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+\begin{frame}[t]{Problem formulation}
+
+\textbf{Given:} 
+\begin{itemize}
+	\item antenna configuration ($d, N$)
+	\item reference pattern
+	\item set of wavelengths (frequencies)
+\end{itemize}
+
+\textbf{Find:} optimal allocation of currents among antenna elements so that their radiation patterns match desired ones. 
+    
+\begin{equation*}
+\begin{aligned}
+& \minimise_{I^{\lambda_{1\ldots k}}} 
+& & \Big\| |\mathcal{F}_{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - |b|^2 \Big\|_2^2 \\
+& \st
+& & I^{\lambda_i} \odot I^{\lambda_j} = 0, \quad \forall i, j \colon i \ne j \\
+\end{aligned}
+\end{equation*}
+
+where 
+\begin{equation*}
+  \mathcal{F}_{\lambda_{1 \ldots k}} = \diag{(\mathcal{F}_{\lambda_1}, \mathcal{F}_{\lambda_2}, \ldots, \mathcal{F}_{\lambda_k})}, \quad \mathcal{F}_{\lambda_{k}} = \Big\{ e^{i \frac{2\pi}{\lambda_k}n d \cos{\phi_m}} \Big\}_{n=0\ldots N, m = 0\ldots M}
+\end{equation*}
+
+\textbf{Note}. The problem is non-convex, non-linear with a combinatorial constraint.
+
+\end{frame}
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+\begin{frame}[t]{Proposed solution}
+
+\begin{itemize}
+\item Introduce $J^{\lambda_k}_n = \log{I^{\lambda_k}_n}$ (this implies $I^{\lambda_k}_n > 0$)
+\item Combinatorial constraints are converted into simple linear constraints:
+	\begin{equation*}
+  J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j
+	\end{equation*}
+	where $\epsilon$ is a design parameter. 
+\end{itemize}
+
+Optimisation problem:
+\begin{equation*}
+\begin{aligned}
+& \minimise_{J^{\lambda_{1\ldots k}}} 
+& & \Big\| (e^{J^{\lambda_{1 \ldots k}}})^T Q_{\lambda_{1 \ldots k}}  e^{J^{\lambda_{1 \ldots k}}} - |b|^2 \Big\|_2^2 \\
+& \st
+& & J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j \\
+\end{aligned}
+\end{equation*}
+where $Q_{\lambda_{1 \ldots k}} = \diag{\big[Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}\big]}$ is a rank 4 tensor with $Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}$ are rank 3 tensors consisting of matrices $Q_{\lambda_{k}, i} = \Real{(\overline{f_{\lambda_{k}, i}} \otimes f_{\lambda_{k}, i} )}$. 
+
+\end{frame}
+
+
+
+\begin{frame}[t]{Proposed solution}
+ 
+\begin{itemize}
+	\item It can be shown that the gradient of the objective function is non-zero everywhere except solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
+	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
+	\begin{equation*}
+  \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
+  \label{antenna_design_condition}
+	\end{equation*}
+	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design, i.e. \textit{the finer the spacial resolution of the beam is the more values of $\frac{d}{\lambda}$ should be avoided in favour of optimality, i.e. $\mathcal{N}_{+}(Q_i) = \varnothing$.}
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}[t]{Beam-forming procedure}
+ 
+\textbf{Two steps}:
+\begin{itemize}
+    \item Perform frequency allocation.
+    \item Run optimal beam-forming algorithm.
+\end{itemize}
+
+
+
+\end{frame}
+
+
+%
+% -----------------------------------------------------------------------------------------------------------------
+%
+
+
+
+\end{document}
+
