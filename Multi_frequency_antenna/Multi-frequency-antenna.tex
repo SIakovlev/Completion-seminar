@@ -8,7 +8,50 @@
 %
 
 
-\begin{frame}[t]{Multi-frequency antenna elements allocation. Motivation}
+\begin{frame}[t]{Motivation}
+
+\textbf{Motivation}: Tendecy to reconfigurable phased array antennas.
+
+\textbf{Examples}:
+
+\begin{itemize}
+    \item Dual-function radar communication (DFRC)
+    \item 
+\end{itemize}
+
+\textbf{Main reasons}: 
+\begin{itemize}
+    \item Spectrum congestion problem
+    \item Reduced cost, size and weight
+\end{itemize}
+
+
+\end{frame}
+
+
+%
+% ----------------------------------------------------------------------------------------------------------------- 
+%
+
+
+
+\begin{frame}[t]{Reconfigurable phased antenna arrays. Power amplifier non-linearity}
+
+\textbf{Input}: signals $f_1$ and $f_2$
+
+\textbf{Output}: 
+\begin{itemize}
+    \item $f_1, f_2$
+    \item 2nd harmonics ($2f_1, 2f_2$) and distortion products ($f_2 \pm f_1$)
+    \item 3rd order distortion ($2f_1 \pm f_2$, $2f_2 \pm f_1$)
+\end{itemize}
+
+\begin{figure}[H]
+\begin{adjustbox}{width=0.6\columnwidth}
+\includegraphics{pics/IMD.jpg}
+\end{adjustbox}
+\end{figure}
+
 
 \end{frame}
 
@@ -161,14 +204,20 @@ Non-trivial lower bound can be obtained:
   \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
   \label{antenna_design_condition}
 	\end{equation*}
-	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design, i.e. \textit{the finer the spacial resolution of the beam is the more values of $\frac{d}{\lambda}$ should be avoided in favour of optimality, i.e. $\mathcal{N}_{+}(Q_i) = \varnothing$.}
+	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design: 
 \end{itemize}
+
+\begin{center}
+\begin{tcolorbox}
+\textit{The finer the spacial resolution of the beam is the more values of $\frac{d}{\lambda}$ should be avoided in favour of optimality, i.e. $\mathcal{N}_{+}(Q_i) = \varnothing$.}
+\end{tcolorbox}
+\end{center}
 
 \end{frame}
 
 
 
-\begin{frame}[t]{Proposed solution}
+\begin{frame}[t]{Practical solution}
 
 \begin{itemize}
 \item Introduce $J^{\lambda_k}_n = \log{I^{\lambda_k}_n}$ (this implies $I^{\lambda_k}_n > 0$)
@@ -183,12 +232,13 @@ Optimisation problem:
 \begin{equation*}
 \begin{aligned}
 & \minimise_{J^{\lambda_{1\ldots k}}} 
-& & \Big\| (e^{J^{\lambda_{1 \ldots k}}})^T Q_{\lambda_{1 \ldots k}}  e^{J^{\lambda_{1 \ldots k}}} - |b|^2 \Big\|_2^2 \\
+& & \sum_{k=1}^K \sum_{m=1}^M \Big\| (e^{J^{\lambda_{k}}})^T Q^{\lambda_{k}}_m  e^{J^{\lambda_{k}}} - |b^{\lambda_{k}}_m|^2 \Big\|_2^2 \\
 & \st
 & & J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j \\
 \end{aligned}
+\label{general_problem_formulation3}
 \end{equation*}
-where $Q_{\lambda_{1 \ldots k}} = \diag{\big[Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}\big]}$ is a rank 4 tensor with $Q_{\lambda_{1}}, Q_{\lambda_{2}}, \ldots, Q_{\lambda_{k}}$ are rank 3 tensors consisting of matrices $Q_{\lambda_{k}, i} = \Real{(\overline{f_{\lambda_{k}, i}} \otimes f_{\lambda_{k}, i} )}$. 
+where $J^{\lambda_{k}}$ is a current magnitude vector with wavelength $\lambda_{k}$, $Q^{\lambda_{k}}_m = \Real{(\overline{f_m^{\lambda_{k}}} \otimes f_m^{\lambda_{k}})}$, $|b^{\lambda_{k}}_m|$ is the amplitude of a reference beam component with wavelength $\lambda_{k}$ in direction $m$.
 
 \end{frame}
 
