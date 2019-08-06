@@ -10,23 +10,53 @@
 
 \begin{frame}[t]{Motivation}
 
-\textbf{Motivation}: Tendecy to reconfigurable phased array antennas.
+\textbf{Motivation}: Tendency to multi-functional phased array antennas.
 
 \textbf{Examples}:
 
 \begin{itemize}
     \item Dual-function radar communication (DFRC)
-    \item 
+    \item 5G technology ($600$MHz - $6$GHz and $24$ - $86$ GHz)
+    \item Space-based internet system (Starlink)
 \end{itemize}
 
 \textbf{Main reasons}: 
 \begin{itemize}
-    \item Spectrum congestion problem
-    \item Reduced cost, size and weight
+    \item Required spectrum efficiency due to spectrum congestion problem.
+    \item Significant reduction in array area, cost and weight.
 \end{itemize}
 
 
 \end{frame}
+
+
+
+%
+% ----------------------------------------------------------------------------------------------------------------- 
+%
+
+
+
+\begin{frame}[t]{Modern phased array architecture}
+
+\begin{columns}[t]
+    \begin{column}{0.3\textwidth}
+    \textbf{Key elements}:
+    \begin{itemize}
+        \item 
+    \end{itemize}        
+    \end{column}
+    \begin{column}{0.7\textwidth}
+        \begin{figure}[H]
+        \begin{adjustbox}{width=0.75\linewidth}
+        \includegraphics{pics/antenna_structure.jpg}
+        \end{adjustbox}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
 
 
 %
@@ -42,12 +72,12 @@
 \textbf{Output}: 
 \begin{itemize}
     \item $f_1, f_2$
-    \item 2nd harmonics ($2f_1, 2f_2$) and distortion products ($f_2 \pm f_1$)
-    \item 3rd order distortion ($2f_1 \pm f_2$, $2f_2 \pm f_1$)
+    \item $2$nd harmonics ($2f_1, 2f_2$) and distortion products ($f_2 \pm f_1$)
+    \item $3$rd order distortion ($2f_1 \pm f_2$, $2f_2 \pm f_1$)
 \end{itemize}
 
 \begin{figure}[H]
-\begin{adjustbox}{width=0.6\columnwidth}
+\begin{adjustbox}{width=0.65\linewidth}
 \includegraphics{pics/IMD.jpg}
 \end{adjustbox}
 \end{figure}
@@ -152,7 +182,7 @@ where
 
 
 
-\begin{frame}[t]{Results}
+\begin{frame}[t]{Title}
 
 For $2$ different currents:
 
@@ -192,13 +222,13 @@ Non-trivial lower bound can be obtained:
 \begin{frame}[t]{Power pattern. Uncertainty principle}
 
 \begin{equation*}
-\Big\| |\mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - |b^{\lambda_{1 \ldots k}}|^2 \Big\|_2^2 = \sum_{k=1}^K \sum_{m=1}^M \Big\| (I^{\lambda_{k}})^T Q^{\lambda_{k}}_m  I^{\lambda_{k}} - |b^{\lambda_{k}}_m|^2 \Big\|_2^2
+\Big\| |\mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - b^{\lambda_{1 \ldots k}} \Big\|_2^2 = \sum_{k=1}^K \sum_{m=1}^M \Big\| (I^{\lambda_{k}})^T Q^{\lambda_{k}}_m  I^{\lambda_{k}} - b^{\lambda_{k}}_m \Big\|_2^2
 \end{equation*}
 
 
  
 \begin{itemize}
-	\item It can be shown that the gradient of the objective function is non-zero everywhere except solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
+	\item It can be shown that the gradient of the objective function is non-zero everywhere except the solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
 	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
 	\begin{equation*}
   \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
@@ -232,13 +262,57 @@ Optimisation problem:
 \begin{equation*}
 \begin{aligned}
 & \minimise_{J^{\lambda_{1\ldots k}}} 
-& & \sum_{k=1}^K \sum_{m=1}^M \Big\| (e^{J^{\lambda_{k}}})^T Q^{\lambda_{k}}_m  e^{J^{\lambda_{k}}} - |b^{\lambda_{k}}_m|^2 \Big\|_2^2 \\
+& & \sum_{k=1}^K \sum_{m=1}^M \Big\| (e^{J^{\lambda_{k}}})^T Q^{\lambda_{k}}_m  e^{J^{\lambda_{k}}} - b^{\lambda_{k}}_m \Big\|_2^2 \\
 & \st
 & & J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j \\
 \end{aligned}
 \label{general_problem_formulation3}
 \end{equation*}
 where $J^{\lambda_{k}}$ is a current magnitude vector with wavelength $\lambda_{k}$, $Q^{\lambda_{k}}_m = \Real{(\overline{f_m^{\lambda_{k}}} \otimes f_m^{\lambda_{k}})}$, $|b^{\lambda_{k}}_m|$ is the amplitude of a reference beam component with wavelength $\lambda_{k}$ in direction $m$.
+
+\end{frame}
+
+
+
+\begin{frame}[t]{Algorithm}
+
+\begin{equation*}
+\begin{aligned}
+& \minimise_{J^{\lambda_{1\ldots k}}} 
+& & \sum_{k=1}^K \sum_{m=1}^M \Big\| (e^{J^{\lambda_{k}}})^T Q^{\lambda_{k}}_m  e^{J^{\lambda_{k}}} - b^{\lambda_{k}}_m \Big\|_2^2 \\
+& \st
+& & M J^{\lambda_{1 \ldots k}} \le - \epsilon
+\end{aligned}
+\label{general_problem_formulation3}
+\end{equation*}
+
+\begin{enumerate}[\color{black}(1)]
+    \item Solve unconstrained problem, get $J^*$
+    \item Choose $\epsilon = \min{J^*}$. Increase by $\delta \epsilon$.
+    \item Solve constrained problem. Return to the previous step
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}[t]{Results}
+
+
+\begin{columns}[t]
+        \begin{column}{0.55\textwidth}
+            \centering
+            \begin{adjustbox}{width=1\columnwidth}
+            \input{pics/3currents.tex}
+            \end{adjustbox}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \centering
+            \begin{adjustbox}{width=1\columnwidth}
+            \input{pics/3currents_alloc.tex}
+            \end{adjustbox}
+        \end{column}
+\end{columns}   
 
 \end{frame}
 
