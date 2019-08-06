@@ -551,10 +551,6 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 		\item DBCI$_{XR}$ - with 
 		modifications
 	\end{itemize}
-\item Result:
-	\begin{itemize}
-		\item \textbf{2-5} times better accuracy
-	\end{itemize}
 }
 \end{itemize}
 
@@ -609,6 +605,47 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 \end{columns}
 
 \end{frame}
+
+
+
+
+\begin{frame}[t]{Simulation results. Long power lines}
+
+\begin{columns}[t]
+\begin{column}{0.4\textwidth}
+\centering
+\begin{itemize}
+\item Linear feeder
+\item 10 loads
+\item Length of power lines: $1-2$km
+\item European LV Test Feeder
+\item Noise: 
+	\begin{itemize}
+		\item Gaussian, full scale
+	\end{itemize}
+\item Algorithms:
+	\begin{itemize}
+		\item BCI - original
+	\end{itemize}
+\item Result:
+	\begin{itemize}
+		\item \textbf{2-5} times better accuracy
+	\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.7\textwidth}
+	\centering
+	\begin{figure}[H]
+	\begin{adjustbox}{width=0.75\columnwidth}
+	\input{pics/z_rel_long_lines.tex}
+	\end{adjustbox}
+	\end{figure}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
 
 
 \begin{frame}[fragile]{Short questions}
