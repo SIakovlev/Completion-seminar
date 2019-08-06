@@ -16,7 +16,7 @@
 
 \begin{itemize}
     \item Dual-function radar communication (DFRC)
-    \item 5G technology ($600$MHz - $6$GHz and $24$ - $86$ GHz)
+    \item Massive MIMO: 5G technology ($600$MHz - $6$GHz and $24$ - $86$ GHz)
     \item Space-based internet system (Starlink)
 \end{itemize}
 
@@ -37,13 +37,14 @@
 
 
 
-\begin{frame}[t]{Modern phased array architecture}
+\begin{frame}[t]{Digital phased array architecture}
 
 \begin{columns}[t]
     \begin{column}{0.3\textwidth}
-    \textbf{Key elements}:
+    \textbf{Key features}:
     \begin{itemize}
-        \item 
+        \item Flexible
+        \item Expensive
     \end{itemize}        
     \end{column}
     \begin{column}{0.7\textwidth}
@@ -182,32 +183,69 @@ where
 
 
 
-\begin{frame}[t]{Title}
+\begin{frame}[t]{Objective function choice}
 
-For $2$ different currents:
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+    Fourier Transform pattern:
+    \begin{equation*}
+    \minimise_{I^{\lambda_{1\ldots k}}} \Big\| \mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}} - b^{\lambda_{1 \ldots k}} \Big\|_2^2
+    \end{equation*}
+
+    % \begin{equation*}
+    % \begin{aligned}
+    % & \minimise_{I^{\lambda_{1\ldots k}}} 
+    % & & \Big\| \mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}} - b^{\lambda_{1 \ldots k}} \Big\|_2^2 \\
+    % & \st
+    % & & (I^{\lambda_{1\ldots k}})^T B I^{\lambda_{1\ldots k}} = 0 \\
+    % &&& I^{\lambda_{1\ldots k}} \succeq 0 \\
+    % \end{aligned}
+    % \end{equation*}
+
+\end{column}
+\begin{column}{0.5\textwidth}
+    Power pattern:
+    \begin{equation*}
+    \minimise_{I^{\lambda_{1\ldots k}}}  \Big\| |\mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}}|^2 - b^{\lambda_{1 \ldots k}} \Big\|_2^2
+    \end{equation*}
+\end{column}
+\end{columns}
 
 \begin{equation*}
 \begin{aligned}
-& \minimise_{I^{\lambda_{1\ldots k}}} 
-& & \Big\| \mathcal{F}^{\lambda_{1 \ldots k}} I^{\lambda_{1\ldots k}} - b^{\lambda_{1 \ldots k}} \Big\|_2^2 \\
 & \st
-& & (I^{\lambda_{1\ldots k}})^T B I^{\lambda_{1\ldots k}} = 0 \\
+& & (I^{\lambda_{1\ldots k}})^T B I^{\lambda_{1\ldots k}} = 0, \quad \text{\textcolor{gray}{($B=\begin{bmatrix} 0 & I \\ I & 0\end{bmatrix}$ for $2$ different currents)}} \\
 &&& I^{\lambda_{1\ldots k}} \succeq 0 \\
 \end{aligned}
 \end{equation*}
-where $B$ is backward identity matrix, i.e. $\begin{bmatrix} 0 & I \\ I & 0\end{bmatrix}$
 
+% For $2$ different currents: $B = \begin{bmatrix} 0 & I \\ I & 0\end{bmatrix}$.
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+    \textbf{Features}:
+    \begin{itemize}
+        \item Non-trivial lower bound can be obtained from dual problem:
+            \begin{equation*}
+            \begin{aligned}
+            & \min_{x} 
+            & & \Big\{\| Ax - b \|_2^2 + \lambda_{min} (A^TA) x^T B x \Big\} \\
+            & \st
+            & & x \ge 0 \\
+            \end{aligned}
+            \end{equation*}
+    \end{itemize}
+    
+\end{column}
+\begin{column}{0.5\textwidth}
+    \textbf{Features}:
+    \begin{itemize}
+        \item Quasi-convex objective
+        \item Exploiting phases (expect better results)
+        \item Unconstrained problem optimality condition leads to \textbf{uncertainty principle} 
+    \end{itemize}
+\end{column}    
+\end{columns}
 
-Non-trivial lower bound can be obtained:
-
-\begin{equation*}
-\begin{aligned}
-& \min_{x} 
-& & \Big\{\| Ax - b \|_2^2 + \lambda_{min} (A^TA) x^T B x \Big\} \\
-& \st
-& & x \ge 0 \\
-\end{aligned}
-\end{equation*}
 
 \end{frame}
 
