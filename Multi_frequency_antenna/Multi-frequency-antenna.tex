@@ -10,7 +10,7 @@
 
 \begin{frame}[t]{Motivation}
 
-\textbf{Motivation}: Tendency to multi-functional phased array antennas.
+\textbf{Motivation}: Growing interest in multi-functional phased array antennas.
 
 \textbf{Examples}:
 
@@ -138,9 +138,15 @@
 \end{figure}
 
 \begin{itemize}
-	\item $I^{\lambda_{l}}$ and $I^{\lambda_{k}}$ represent randomly allocated currents with wavelengths $\lambda_l$ and $\lambda_k$ for illustration purposes
+	\item $I^{\lambda_{l}}$ and $I^{\lambda_{k}}$  are randomly allocated currents with wavelengths $\lambda_l$ and $\lambda_k$ for illustration purposes
 	\item $\phi_{m}$ is the beam angle, $d$ is the distance between antenna elements
 \end{itemize}
+
+\textbf{Assumption}:
+Antenna elements are effective radiators in the band of interest (broadband radiators, e.g Vivaldi antennas)
+
+\textbf{Note}:
+We aim to allocate one frequency per element
 
 \end{frame}
 
@@ -153,7 +159,7 @@
 
 \textbf{Given:} antenna configuration ($d, N$), reference patterns at different frequencies.
 
-\textbf{Find:} optimal allocation of currents among antenna elements
+\textbf{Find:} optimal allocation of currents $I^{\lambda_{1\ldots k}}$ among antenna elements
     
 \begin{equation*}
 \begin{aligned}
@@ -164,14 +170,14 @@
 \end{aligned}
 \end{equation*}
 
-where 
+where $b^{\lambda_{k}}_m$ is the amplitude of a reference beam with wavelength $\lambda_{k}$ in direction $m$ and
 \begin{equation*}
   \mathcal{F}_{\lambda_{1 \ldots k}} = \diag{(\mathcal{F}_{\lambda_1}, \mathcal{F}_{\lambda_2}, \ldots, \mathcal{F}_{\lambda_k})}, \quad \mathcal{F}_{\lambda_{k}} = \Big\{ e^{i \frac{2\pi}{\lambda_k}n d \cos{\phi_m}} \Big\}_{n=0\ldots N, m = 0\ldots M}
 \end{equation*}
 
 \textbf{Note}: 
 \begin{itemize}
-    \item The problem is non-convex, non-linear with a combinatorial constraint, i.e. $(k+1)^N$ solutions should be tested ($k$ - number of frequencies, $N$ - number of elements).
+    \item The problem is non-convex, non-linear with a combinatorial constraint, i.e. $k^N$ solutions should be tested ($k$ - number of frequencies, $N$ - number of elements) if unconstrained problem is optimally solvable.
 \end{itemize}
 
 \end{frame}
@@ -266,7 +272,7 @@ where
 
  
 \begin{itemize}
-	\item It can be shown that the gradient of the objective function is non-zero everywhere except the solution if $\mathcal{N}_{+}(Q_i) = \varnothing, ~\forall i$
+	\item It can be shown that the gradient of the objective function is non-zero everywhere except the solution if $\mathcal{N}_{+}(Q^{\lambda_{k}}_m) = \varnothing, ~\forall i$, $Q^{\lambda_{k}}_m = \Real{(\overline{f_m^{\lambda_{k}}} \otimes f_m^{\lambda_{k}})}$.
 	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
 	\begin{equation*}
   \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
@@ -306,7 +312,6 @@ Optimisation problem:
 \end{aligned}
 \label{general_problem_formulation3}
 \end{equation*}
-where $J^{\lambda_{k}}$ is a current magnitude vector with wavelength $\lambda_{k}$, $Q^{\lambda_{k}}_m = \Real{(\overline{f_m^{\lambda_{k}}} \otimes f_m^{\lambda_{k}})}$, $|b^{\lambda_{k}}_m|$ is the amplitude of a reference beam component with wavelength $\lambda_{k}$ in direction $m$.
 
 \end{frame}
 
@@ -334,8 +339,13 @@ where $J^{\lambda_{k}}$ is a current magnitude vector with wavelength $\lambda_{
 
 
 
-\begin{frame}[t]{Results}
+\begin{frame}[t]{Results. Allocation of three frequencies}
 
+\textbf{Antenna characteristics}:
+\begin{itemize}
+    \item $100$ elements
+    \item $\lambda_1$ 
+\end{itemize}
 
 \begin{columns}[t]
         \begin{column}{0.55\textwidth}
