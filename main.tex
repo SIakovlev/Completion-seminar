@@ -80,7 +80,15 @@
 \tcbset{width=0.9\linewidth,boxrule=0pt,colback=gray!20,arc=0pt,auto outer arc,left=0pt,right=0pt,boxsep=3pt}
 
 \theoremstyle{plain}
-%\newtheorem{lemma}{Lemma}
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+% \newtheorem{lemma}{Lemma}
 
 \setbeamercolor{postit}{fg=black,bg=yellow!5}
 
