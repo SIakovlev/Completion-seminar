@@ -215,8 +215,8 @@
 \begin{equation*}
 \min_{\bm{x}, \bm{y}} \underbrace{\|A\bm{x} + B\bm{y} + \bm{c}\|}_{f(\bm{x}, \bm{y})}, \quad \st \bm{y} = \bm{g}(\bm{x})
 \end{equation*}
-\textbf{Idea}: if $A, B$ - full rank and $\bm{g}$ is differentiable and surjective, find roots of 
-$$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
+\textbf{Idea}: if $A, B$ - full rank and $\bm{g}$ is differentiable and surjective \cite{iakovlev2018fixed}, find roots of 
+$$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$ 
 \end{column}}
 
 
@@ -274,7 +274,7 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 \centering
 \begin{itemize}
 \only<1-2>{
-\item Feeder type: linear
+\item Feeder type: chain
 \item Number of loads: 10
 \item Load parameters: 
 	\begin{itemize}
@@ -518,7 +518,7 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 
 \begin{itemize}
 \only<1>{
-\item Feeder type: linear
+\item Feeder type: chain
 \item Number of loads: 10
 \item Load parameters: 
 	\begin{itemize}
@@ -537,7 +537,7 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 	\end{itemize}
 }
 \only<2->{
-\item Linear feeder
+\item Chain feeder
 \item 10 loads
 \item European LV Test Feeder data
 \item Noise: 
@@ -615,7 +615,7 @@ $$\bm{y} = \bm{g}(\argmin_{\bm{x}} f(\bm{x}, \bm{y})) = \bm{\phi}(\bm{y})$$
 \begin{column}{0.4\textwidth}
 \centering
 \begin{itemize}
-\item Linear feeder
+\item Chain feeder
 \item 10 loads
 \item Length of power lines: $1-2$km
 \item European LV Test Feeder data
