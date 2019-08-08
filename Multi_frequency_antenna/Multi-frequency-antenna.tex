@@ -11,21 +11,35 @@
 \begin{frame}[t]{Motivation}
 
 \textbf{Motivation}: Growing interest in multi-functional phased array antennas.
-
+\uncover<2->{
 \textbf{Examples}:
 
 \begin{itemize}
-    \item Dual-function radar communication (DFRC)
-    \item Massive MIMO: 5G technology ($600$MHz - $6$GHz and $24$ - $86$ GHz)
+    \item Dual-function radar communication (DFRC) \cite{wang2018sparse}
+    \begin{itemize}
+        \item Use common or shared aperture and frequency spectrum between radar, electronic warfare and military communications
+    \end{itemize}
+    \item Massive MIMO. 5G technology ($600$MHz - $6$GHz and $24$ - $86$ GHz)
+    \begin{itemize}
+        \item Each cell has multiple antennas communicating with the wireless device, received by multiple antennas in the device, thus multiple bitstreams of data are transmitted in parallel.
+    \end{itemize}
     \item Space-based internet system (Starlink)
+    \begin{itemize}
+        \item Operates in Ku (12–18 GHz) and Ka (26.5 – 40 GHz) bands
+        \item Authorisation operation in V-band (37.5-42.0 GHz and 47.2-50.2 GHz) is obtained recently
+    \end{itemize}
 \end{itemize}
+}
 
-\textbf{Main reasons}: 
+\vspace{0.3cm}
+
+\uncover<3->{
+\textbf{Main benefits}: 
 \begin{itemize}
     \item Required spectrum efficiency due to spectrum congestion problem.
     \item Significant reduction in array area, cost and weight.
 \end{itemize}
-
+}
 
 \end{frame}
 
@@ -37,26 +51,26 @@
 
 
 
-\begin{frame}[t]{Digital phased array architecture}
+% \begin{frame}[t]{Digital phased array architecture}
 
-\begin{columns}[t]
-    \begin{column}{0.3\textwidth}
-    \textbf{Key features}:
-    \begin{itemize}
-        \item Flexible
-        \item Expensive
-    \end{itemize}        
-    \end{column}
-    \begin{column}{0.7\textwidth}
-        \begin{figure}[H]
-        \begin{adjustbox}{width=0.75\linewidth}
-        \includegraphics{pics/antenna_structure.jpg}
-        \end{adjustbox}
-        \end{figure}
-    \end{column}
-\end{columns}
+% \begin{columns}[t]
+%     \begin{column}{0.3\textwidth}
+%     \textbf{Key features}:
+%     \begin{itemize}
+%         \item Flexible
+%         \item Expensive
+%     \end{itemize}        
+%     \end{column}
+%     \begin{column}{0.7\textwidth}
+%         \begin{figure}[H]
+%         \begin{adjustbox}{width=0.75\linewidth}
+%         \includegraphics{pics/antenna_structure.jpg}
+%         \end{adjustbox}
+%         \end{figure}
+%     \end{column}
+% \end{columns}
 
-\end{frame}
+% \end{frame}
 
 
 
@@ -68,21 +82,40 @@
 
 \begin{frame}[t]{Reconfigurable phased antenna arrays. Power amplifier non-linearity}
 
-\textbf{Input}: signals $f_1$ and $f_2$
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+    \textbf{Modern architecture}:
+    \begin{figure}[H]
+        \begin{adjustbox}{width=1\linewidth}
+        \includegraphics{pics/antenna_structure.jpg}
+        \end{adjustbox}
+    \end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+    \only<2->{
+    \textbf{Input}: signals $f_1$ and $f_2$
 
-\textbf{Output}: 
-\begin{itemize}
-    \item $f_1, f_2$
-    \item $2$nd harmonics ($2f_1, 2f_2$) and distortion products ($f_2 \pm f_1$)
-    \item $3$rd order distortion ($2f_1 \pm f_2$, $2f_2 \pm f_1$)
-\end{itemize}
+    \textbf{Output}: 
+    \begin{itemize}
+        \item $f_1, f_2, 2f_1, 2f_2$ and distortion products: $f_2 \pm f_1$, $2f_1 \pm f_2$, $2f_2 \pm f_1$
+    \end{itemize}
 
-\begin{figure}[H]
-\begin{adjustbox}{width=0.65\linewidth}
-\includegraphics{pics/IMD.jpg}
-\end{adjustbox}
-\end{figure}
-
+    \begin{figure}[H]
+    \begin{adjustbox}{width=1\linewidth}
+    \includegraphics{pics/IMD.jpg}
+    \end{adjustbox}
+    \end{figure}}
+    % \begin{figure}[H]
+    % \centering
+    % \begin{tikzpicture}
+    % % \draw[thin, color=gray!50] (0, 0) -- (2, 0);
+    % % \draw[thin, color=gray!50] (0, 0.5) -- (2, 0.5);
+    % \draw[thin, -latex'] (0, 0) -- node[above]{$f_1$} (2, 0);
+    % \draw[thin, -latex'] (0, 0.5) -- node[above]{$f_2$} (2, 0.5);
+    % \end{tikzpicture}
+    % \end{figure}
+\end{column}
+\end{columns}
 
 \end{frame}
 
@@ -93,7 +126,10 @@
 
 \begin{frame}[t]{Multi-frequency antenna elements allocation}
 
-\begin{figure}[H]
+\begin{columns}[t]
+
+\begin{column}{0.6\textwidth}
+    \begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \draw[thin, color=gray!50] (0, 0) -- (0, 0.5);
@@ -138,15 +174,26 @@
 \end{figure}
 
 \begin{itemize}
-	\item $I^{\lambda_{l}}$ and $I^{\lambda_{k}}$  are randomly allocated currents with wavelengths $\lambda_l$ and $\lambda_k$ for illustration purposes
-	\item $\phi_{m}$ is the beam angle, $d$ is the distance between antenna elements
+    \item $I^{\lambda_{l}}$ and $I^{\lambda_{k}}$  are randomly allocated currents with wavelengths $\lambda_l$ and $\lambda_k$ for illustration purposes
+    \item $\phi_{m}$ is the beam angle, $d$ is the distance between antenna elements
 \end{itemize}
 
-\textbf{Assumption}:
-Antenna elements are effective radiators in the band of interest (broadband radiators, e.g Vivaldi antennas)
+\end{column}
+\begin{column}{0.4\textwidth}
+    \textbf{Assumption}:
+    Antenna elements are effective radiators in the band of interest (broadband radiators), e.g Vivaldi antennas:
 
-\textbf{Note}:
-We aim to allocate one frequency per element
+    \begin{figure}[H]
+    \begin{adjustbox}{width=0.65\linewidth}
+    \includegraphics{pics/vivaldi-print.jpg}
+    \end{adjustbox}
+    \end{figure}
+
+    \textbf{Note}:
+    We aim to allocate one frequency per element
+\end{column}
+    
+\end{columns}
 
 \end{frame}
 
@@ -230,14 +277,12 @@ where $b^{\lambda_{k}}_m$ is the amplitude of a reference beam with wavelength $
 \begin{column}{0.5\textwidth}
     \textbf{Features}:
     \begin{itemize}
-        \item Non-trivial lower bound can be obtained from dual problem:
+        \item Non-trivial lower bound can be obtained:
             \begin{equation*}
-            \begin{aligned}
-            & \min_{x} 
-            & & \Big\{\| Ax - b \|_2^2 + \lambda_{min} (A^TA) x^T B x \Big\} \\
-            & \st
-            & & x \ge 0 \\
-            \end{aligned}
+            \begin{split}
+            \min_{x \ge 0} \Big\{ &\| \mathcal{F}^{\lambda_{1 \ldots k}}x - b^{\lambda_{1 \ldots k}} \|_2^2 + \\ 
+            & \lambda_{min} (\overline{\mathcal{F}^{\lambda_{1 \ldots k}}}\mathcal{F}^{\lambda_{1 \ldots k}}) x^T B x \Big\} \\
+            \end{split}
             \end{equation*}
     \end{itemize}
     
@@ -245,7 +290,7 @@ where $b^{\lambda_{k}}_m$ is the amplitude of a reference beam with wavelength $
 \begin{column}{0.5\textwidth}
     \textbf{Features}:
     \begin{itemize}
-        \item Quasi-convex objective
+        \item Non-convex objective
         \item Exploiting phases (expect better results)
         \item Unconstrained problem optimality condition leads to \textbf{uncertainty principle} 
     \end{itemize}
@@ -272,13 +317,13 @@ where $b^{\lambda_{k}}_m$ is the amplitude of a reference beam with wavelength $
 
  
 \begin{itemize}
-	\item It can be shown that the gradient of the objective function is non-zero everywhere except the solution if $\mathcal{N}_{+}(Q^{\lambda_{k}}_m) = \varnothing, ~\forall i$, $Q^{\lambda_{k}}_m = \Real{(\overline{f_m^{\lambda_{k}}} \otimes f_m^{\lambda_{k}})}$.
+	\item It can be shown that the gradient of the objective function is non-zero everywhere except the solution if $\mathcal{N}_{+}(Q^{\lambda_{k}}_m) = \varnothing, ~\forall i$, $Q^{\lambda_{k}}_m = \Real{(f_m^{\lambda_{k}} \overline{f_m^{\lambda_{k}}})}$ \cite{iakovlev2019multi}
 	\item Analysis of $\mathcal{N}_{+}(Q_i)$ leads to the following conditions:
 	\begin{equation*}
   \frac{d}{\lambda} \neq \frac{k}{N+1} \sec \phi_m , \quad \frac{d}{\lambda} \neq \frac{1}{2N} (1 + 2k) \sec \phi_m, \quad \forall m \in \mathbb{Z}^{\ge 0}, \forall k \in \mathbb{Z}
   \label{antenna_design_condition}
 	\end{equation*}
-	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design: 
+	\item These conditions can be interpreted as an \textbf{uncertainty principle} for antenna design \cite{iakovlev2019multi}: 
 \end{itemize}
 
 \begin{center}
@@ -295,9 +340,9 @@ where $b^{\lambda_{k}}_m$ is the amplitude of a reference beam with wavelength $
 
 \begin{itemize}
 \item Introduce $J^{\lambda_k}_n = \log{I^{\lambda_k}_n}$ (this implies $I^{\lambda_k}_n > 0$)
-\item Combinatorial constraints are converted into simple linear constraints:
+\item Combinatorial constraints are converted into linear constraints:
     \begin{equation*}
-  J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j
+  I^{\lambda_i} \odot I^{\lambda_j} = 0 \quad \rightarrow \quad J^{\lambda_i} + J^{\lambda_j} \le -\epsilon, \quad \forall i, j \colon i \ne j
     \end{equation*}
     where $\epsilon$ is a design parameter. 
 \end{itemize}
@@ -331,9 +376,53 @@ Optimisation problem:
 
 \begin{enumerate}[\color{black}(1)]
     \item Solve unconstrained problem, get $J^*$
-    \item Choose $\epsilon = \min{J^*}$. Increase by $\delta \epsilon$.
+    \item Choose $\epsilon = \min{|MJ^*|}$. Increase by $\delta \epsilon$.
     \item Solve constrained problem. Return to the previous step
 \end{enumerate}
+
+\vspace{0.3cm}
+
+\textbf{Note}. The following does not change key properties:
+\begin{itemize}
+    \item Mutual coupling matrix can be incoropated in $Q^{\lambda_{k}}_m$
+    \item Phase shifts can be incorporated in $Q^{\lambda_{k}}_m$
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}[t]{Results}
+\begin{columns}[t]
+\begin{column}{0.5\textwidth}
+    \centering
+    \textbf{Allocation of two frequencies}
+    \begin{figure}[H]
+    \centering
+    \begin{adjustbox}{width=0.8\linewidth}
+    \input{pics/10conf_2freq.tex}
+    \end{adjustbox}
+    \end{figure}  
+\end{column}
+\begin{column}{0.5\textwidth}
+    \centering
+    \textbf{Allocation of three frequencies}
+    \begin{figure}[H]
+    \centering
+    \begin{adjustbox}{width=0.8\linewidth}
+    \input{pics/10conf_3freq.tex}
+    \end{adjustbox}
+    \end{figure}  
+\end{column}    
+\end{columns}
+
+\vspace{0.3cm}
+
+\textbf{Experimental setup}:
+\begin{itemize}
+    \item 10 different antenna configurations are shown (averaged)
+    \item Number of elements varied from $10$ to $60$
+\end{itemize}
 
 \end{frame}
 
@@ -341,40 +430,26 @@ Optimisation problem:
 
 \begin{frame}[t]{Results. Allocation of three frequencies}
 
-\textbf{Antenna characteristics}:
+\textbf{Note}:
 \begin{itemize}
-    \item $100$ elements
-    \item $\lambda_1$ 
+    \item $50$ elements, $d$ - distance between elements
+    \item All units are normalised
 \end{itemize}
 
-\begin{columns}[t]
+\begin{columns}[b]
         \begin{column}{0.55\textwidth}
             \centering
             \begin{adjustbox}{width=1\columnwidth}
-            \input{pics/3currents.tex}
+            \input{pics/formed_beams.tex}
             \end{adjustbox}
         \end{column}
         \begin{column}{0.55\textwidth}
             \centering
             \begin{adjustbox}{width=1\columnwidth}
-            \input{pics/3currents_alloc.tex}
+            \input{pics/current_distribution.tex}
             \end{adjustbox}
         \end{column}
 \end{columns}   
-
-\end{frame}
-
-
-
-\begin{frame}[t]{Beam-forming procedure}
- 
-\textbf{Two steps}:
-\begin{itemize}
-    \item Perform frequency allocation.
-    \item Run optimal beam-forming algorithm.
-\end{itemize}
-
-
 
 \end{frame}
 
